@@ -11,7 +11,7 @@ jobs:
     runs-on: windows-2022
     env:
       Solution_Name: SistemaInventarioColchones.sln          # Cambia "MyApp.sln" por el nombre de tu solución.
-      Project_Path: SistemaInventarioColchones/SistemaInventarioColchones.csproj  # Cambia la ruta según tu proyecto.
+      Project_Path: SistemaInventarioColchones.csproj  # Cambia la ruta según tu proyecto.
     steps:
     - name: Checkout code
       uses: actions/checkout@v4
