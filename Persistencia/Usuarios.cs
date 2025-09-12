@@ -32,7 +32,8 @@ namespace SistemaInventarioColchones.Persistencia
         {
    
         }
-
+        //543
+        //574
         public bool ConfirmarCon()
         {
             if (con.State == ConnectionState.Closed)
