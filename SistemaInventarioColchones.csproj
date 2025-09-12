@@ -1,0 +1,272 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="packages\EntityFramework.6.4.4\build\EntityFramework.props" Condition="Exists('packages\EntityFramework.6.4.4\build\EntityFramework.props')" />
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{DEFDE2EB-3B71-4AB5-9D49-ED80C67C9464}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <RootNamespace>SistemaInventarioColchones</RootNamespace>
+    <AssemblyName>SistemaInventarioColchones</AssemblyName>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <Deterministic>true</Deterministic>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="BouncyCastle.Cryptography, Version=2.0.0.0, Culture=neutral, PublicKeyToken=072edcf4a5328938, processorArchitecture=MSIL">
+      <HintPath>packages\BouncyCastle.Cryptography.2.4.0\lib\net461\BouncyCastle.Cryptography.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>packages\EntityFramework.6.4.4\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>packages\EntityFramework.6.4.4\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="itextsharp, Version=5.5.13.4, Culture=neutral, PublicKeyToken=8354ae6d2174ddca, processorArchitecture=MSIL">
+      <HintPath>packages\iTextSharp.5.5.13.4\lib\net461\itextsharp.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Configuration.ConfigurationBuilders.Base, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>packages\Microsoft.Configuration.ConfigurationBuilders.Base.3.0.0\lib\Net471\Microsoft.Configuration.ConfigurationBuilders.Base.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Configuration.ConfigurationBuilders.UserSecrets, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>packages\Microsoft.Configuration.ConfigurationBuilders.UserSecrets.3.0.0\lib\Net471\Microsoft.Configuration.ConfigurationBuilders.UserSecrets.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Controlador\ClientesInfo.cs" />
+    <Compile Include="Controlador\ProductosInfo.cs" />
+    <Compile Include="Controlador\ProveedoresInfo.cs" />
+    <Compile Include="Persistencia\AdminProductos.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Persistencia\AdminProductos.Designer.cs">
+      <DependentUpon>AdminProductos.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Persistencia\AdminProveedor.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Persistencia\AdminProveedor.Designer.cs">
+      <DependentUpon>AdminProveedor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controlador\UsuariosInfo.cs" />
+    <Compile Include="Login.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Login.Designer.cs">
+      <DependentUpon>Login.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Persistencia\InicioUsuario.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Persistencia\InicioUsuario.Designer.cs">
+      <DependentUpon>InicioUsuario.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Persistencia\MovimientoUsuario.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Persistencia\MovimientoUsuario.Designer.cs">
+      <DependentUpon>MovimientoUsuario.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Persistencia\ProductosUsuario.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Persistencia\ProductosUsuario.Designer.cs">
+      <DependentUpon>ProductosUsuario.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Persistencia\ProveedoresUsuario.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Persistencia\ProveedoresUsuario.Designer.cs">
+      <DependentUpon>ProveedoresUsuario.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Persistencia\Registrar.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Persistencia\Registrar.Designer.cs">
+      <DependentUpon>Registrar.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Persistencia\Inicio.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Persistencia\Inicio.Designer.cs">
+      <DependentUpon>Inicio.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Persistencia\Productos.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Persistencia\Productos.Designer.cs">
+      <DependentUpon>Productos.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Persistencia\Proveedores.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Persistencia\Proveedores.Designer.cs">
+      <DependentUpon>Proveedores.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Persistencia\AdminReportes.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Persistencia\AdminReportes.Designer.cs">
+      <DependentUpon>AdminReportes.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Persistencia\AdminUsuarios.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Persistencia\AdminUsuarios.Designer.cs">
+      <DependentUpon>AdminUsuarios.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Persistencia\UsuarioMovimiento.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Persistencia\UsuarioMovimiento.Designer.cs">
+      <DependentUpon>UsuarioMovimiento.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Persistencia\Usuarios.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Persistencia\Usuarios.Designer.cs">
+      <DependentUpon>Usuarios.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Persistencia\UsuariosUsuarios.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Persistencia\UsuariosUsuarios.Designer.cs">
+      <DependentUpon>UsuariosUsuarios.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="Persistencia\AdminProductos.resx">
+      <DependentUpon>AdminProductos.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Persistencia\AdminProveedor.resx">
+      <DependentUpon>AdminProveedor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Login.resx">
+      <DependentUpon>Login.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Persistencia\AdminReportes.resx">
+      <DependentUpon>AdminReportes.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Persistencia\AdminUsuarios.resx">
+      <DependentUpon>AdminUsuarios.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Persistencia\Inicio.resx">
+      <DependentUpon>Inicio.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Persistencia\InicioUsuario.resx">
+      <DependentUpon>InicioUsuario.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Persistencia\MovimientoUsuario.resx">
+      <DependentUpon>MovimientoUsuario.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Persistencia\Productos.resx">
+      <DependentUpon>Productos.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Persistencia\ProductosUsuario.resx">
+      <DependentUpon>ProductosUsuario.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Persistencia\Proveedores.resx">
+      <DependentUpon>Proveedores.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Persistencia\ProveedoresUsuario.resx">
+      <DependentUpon>ProveedoresUsuario.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Persistencia\Registrar.resx">
+      <DependentUpon>Registrar.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Persistencia\UsuarioMovimiento.resx">
+      <DependentUpon>UsuarioMovimiento.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Persistencia\Usuarios.resx">
+      <DependentUpon>Usuarios.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Persistencia\UsuariosUsuarios.resx">
+      <DependentUpon>UsuariosUsuarios.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <None Include="packages.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Modelo\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\imagenlogin.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Resources\bolsadinero.ico" />
+    <None Include="Resources\bolsadinero1.ico" />
+    <Content Include="Resources\clientes.ico" />
+    <Content Include="Resources\clients.ico" />
+    <None Include="Resources\total-ing1.ico" />
+    <None Include="Resources\usuario1.ico" />
+    <None Include="Resources\clients1.ico" />
+    <Content Include="Resources\total-ing.ico" />
+    <Content Include="Resources\usuario.ico" />
+    <None Include="Resources\clientes.png" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>Este proyecto hace referencia a los paquetes NuGet que faltan en este equipo. Use la restauración de paquetes NuGet para descargarlos. Para obtener más información, consulte http://go.microsoft.com/fwlink/?LinkID=322105. El archivo que falta es {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('packages\EntityFramework.6.4.4\build\EntityFramework.props')" Text="$([System.String]::Format('$(ErrorText)', 'packages\EntityFramework.6.4.4\build\EntityFramework.props'))" />
+    <Error Condition="!Exists('packages\EntityFramework.6.4.4\build\EntityFramework.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\EntityFramework.6.4.4\build\EntityFramework.targets'))" />
+  </Target>
+  <Import Project="packages\EntityFramework.6.4.4\build\EntityFramework.targets" Condition="Exists('packages\EntityFramework.6.4.4\build\EntityFramework.targets')" />
+</Project>
