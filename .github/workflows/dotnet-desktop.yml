@@ -8,7 +8,7 @@ on:
 
 jobs:
   build:
-    runs-on: windows-2022
+    runs-on: windows-latest
     env:
       Solution_Name: SistemaInventarioColchones.sln          # Cambia "MyApp.sln" por el nombre de tu solución.
       Project_Path: SistemaInventarioColchones.csproj  # Cambia la ruta según tu proyecto.
