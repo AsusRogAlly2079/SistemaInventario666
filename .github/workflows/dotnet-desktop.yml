@@ -22,20 +22,18 @@ jobs:
         dotnet-version: 8.0.x
 
     - name: Restore NuGet packages
-      run: dotnet restore $env:Project_Path
+      run: dotnet restore $env:Solution_Name
 
     - name: Build .NET project
       run: dotnet build $env:Project_Path --configuration Release
 
     - name: Find EXE file
       run: |
-        echo "##[set-output name=exe_path;]$(Get-ChildItem -Path . -Filter *.exe -Recurse | Where-Object { $_.FullName -like '*\bin\Release\*' } | Select-Object -First 1 | % FullName)"
+        echo "##[set-output name=exe_path;]$(Get-ChildItem -Path . -Filter *.exe -Recurse | Where-Object { $_.FullName -like '*\bin\Release*' } | Select-Object -First 1 | % FullName)"
       id: find_exe
 
     - name: Upload EXE artifact
       uses: actions/upload-artifact@v4
       with:
         name: MyApp-EXE
-
         path: ${{ steps.find_exe.outputs.exe_path }}
-
