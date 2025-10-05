@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Data.SqlClient;
 using System.Windows.Forms;
 using SistemaInventarioColchones.Controlador;
+using MySql.Data.MySqlClient;
 
 namespace SistemaInventarioColchones.Persistencia
 {
@@ -15,17 +15,15 @@ namespace SistemaInventarioColchones.Persistencia
             infoProductos();
         }
 
-        SqlConnection
-       con = new SqlConnection(@"Server=DESKTOP-TR972KR;Database=Bedware_;User Id=sa;Password=daniel1234;TrustServerCertificate=True");
+        MySqlConnection con = new MySqlConnection("Server=bed32989.mysql.database.azure.com;Database=sistema_comercial;Uid=parradosamuel35;Pwd=RTX2080TIxz$;SslMode=Required;");
 
         public void infoProductos()
         {
-             ProductosInfo infoo = new ProductosInfo();
-             List<ProductosInfo> listData = infoo.Productos();
-
+            ProductosInfo infoo = new ProductosInfo();
+            List<ProductosInfo> listData = infoo.Productos();
             dataGridView1.DataSource = listData;
 
-           if (ConfirmarCon())
+            if (ConfirmarCon())
             {
                 try
                 {
@@ -49,14 +47,13 @@ namespace SistemaInventarioColchones.Persistencia
                 JOIN 
                     Material mat ON p.Material_Id = mat.Material_Id
                 JOIN
-                    Proveedor prov ON p.Proveedor_Id = prov.Proveedor_ID";
-
-                    using (SqlCommand cmd = new SqlCommand(query, con))
+                    Proveedor prov ON p.Proveedor_Id = prov.Proveedor_Id";
+                    using (var cmd = new MySqlCommand(query, con))
                     {
-                        SqlDataAdapter adapter = new SqlDataAdapter(cmd);
+                        MySqlDataAdapter adapter = new MySqlDataAdapter(cmd);
                         DataTable table = new DataTable();
                         adapter.Fill(table);
-                        dataGridView1.DataSource = table; // Asignar el DataTable al DataGridView
+                        dataGridView1.DataSource = table;
                     }
                 }
                 catch (Exception ex)
@@ -68,24 +65,15 @@ namespace SistemaInventarioColchones.Persistencia
                     con.Close();
                 }
             }
-
         }
 
         public bool ConfirmarCon()
         {
-            if (con.State == ConnectionState.Closed)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            return con.State == ConnectionState.Closed;
         }
 
         public void LimpiarCampos()
         {
-
             txtProductos_Nombre.Text = "";
             txtProductos_Descripcion.Text = "";
             txtProductos_Marca.Text = "";
@@ -94,25 +82,17 @@ namespace SistemaInventarioColchones.Persistencia
             txtProductos_Stock.Text = "";
             txtProductos_Costo.Text = "";
             txtProductos_Proveedor.Text = "";
-
         }
 
-        private void label3_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label7_Click(object sender, EventArgs e)
-        {
-
-        }
+        private void label3_Click(object sender, EventArgs e) { }
+        private void label7_Click(object sender, EventArgs e) { }
 
         private void btnUsuario_Agregar_Click(object sender, EventArgs e)
         {
             if (txtProductos_Nombre.Text == "" || txtProductos_Descripcion.Text == "" || txtProductos_Marca.Text == "" || cmbProductos_Tamaño.SelectedIndex == -1 ||
                 txtProductos_Material.Text == "" || txtProductos_Stock.Text == "" || txtProductos_Costo.Text == "" || txtProductos_Proveedor.Text == "")
             {
-                MessageBox.Show("Los campos estan vacíos", "Error Message", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Los campos están vacíos", "Error Message", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             else
             {
@@ -121,30 +101,28 @@ namespace SistemaInventarioColchones.Persistencia
                     try
                     {
                         con.Open();
-                        string query = "Select * from Producto where Nombre = @nom";
-                        using (SqlCommand cmd = new SqlCommand(query, con))
+                        string query = "SELECT * FROM Producto WHERE Nombre = @nom";
+                        using (var cmd = new MySqlCommand(query, con))
                         {
                             cmd.Parameters.AddWithValue("@nom", txtProductos_Nombre.Text.Trim());
 
-                            SqlDataAdapter adapter = new SqlDataAdapter(cmd);
+                            MySqlDataAdapter adapter = new MySqlDataAdapter(cmd);
                             DataTable table = new DataTable();
                             adapter.Fill(table);
 
                             if (table.Rows.Count > 0)
                             {
-                                MessageBox.Show(txtProductos_Nombre.Text + " El usuario ya esta creado", "Error Message", MessageBoxButtons.OK, MessageBoxIcon.Error);
-
+                                MessageBox.Show(txtProductos_Nombre.Text + " El producto ya está creado", "Error Message", MessageBoxButtons.OK, MessageBoxIcon.Error);
                             }
                             else
                             {
-                                string insertar = "Insert into Producto (Nombre,Descripcion,Marca_Id,Tamaño,Material_Id,Stock,Costo,Proveedor_Id,Fecha_Creacion) values " +
-                                    "(@nom,@des,@marca,@tamaño,@mat,@stock,@costo,@prov,@fecha)";
-
-                                using (SqlCommand insert = new SqlCommand(insertar, con))
+                                string insertar = "INSERT INTO Producto (Nombre, Descripcion, Marca_Id, Tamaño, Material_Id, Stock, Costo, Proveedor_Id, Fecha_Creacion) VALUES " +
+                                    "(@nom, @des, @marca, @tamaño, @mat, @stock, @costo, @prov, @fecha)";
+                                using (var insert = new MySqlCommand(insertar, con))
                                 {
                                     insert.Parameters.AddWithValue("@nom", txtProductos_Nombre.Text.Trim());
                                     insert.Parameters.AddWithValue("@des", txtProductos_Descripcion.Text.Trim());
-                                    insert.Parameters.AddWithValue("@marca", txtProductos_Marca.Text.Trim());
+                                    insert.Parameters.AddWithValue("@marca", txtProductos_Marca.Text.Trim()); // Si tienes combobox, usa SelectedValue
                                     insert.Parameters.AddWithValue("@tamaño", cmbProductos_Tamaño.SelectedItem.ToString());
                                     insert.Parameters.AddWithValue("@mat", txtProductos_Material.Text.Trim());
                                     insert.Parameters.AddWithValue("@stock", txtProductos_Stock.Text.Trim());
@@ -154,22 +132,17 @@ namespace SistemaInventarioColchones.Persistencia
                                     insert.ExecuteNonQuery();
                                     LimpiarCampos();
                                     infoProductos();
-                                    MessageBox.Show("Usuario registrado Exitosamente", "Information Message", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
+                                    MessageBox.Show("Producto registrado exitosamente", "Information Message", MessageBoxButtons.OK, MessageBoxIcon.Information);
                                 }
                             }
-
                         }
                     }
                     catch (Exception ex)
                     {
-
-                        MessageBox.Show("No se pudo agregar el nuevo producto"+ex, "Error Message", MessageBoxButtons.OK, MessageBoxIcon.Error);
-
+                        MessageBox.Show("No se pudo agregar el nuevo producto: " + ex.Message, "Error Message", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
                     finally
                     {
-
                         con.Close();
                     }
                 }
@@ -186,24 +159,19 @@ namespace SistemaInventarioColchones.Persistencia
             if (txtProductos_Nombre.Text == "" || txtProductos_Descripcion.Text == "" || txtProductos_Marca.Text == "" || cmbProductos_Tamaño.SelectedIndex == -1 ||
                 txtProductos_Material.Text == "" || txtProductos_Stock.Text == "" || txtProductos_Costo.Text == "" || txtProductos_Proveedor.Text == "")
             {
-                MessageBox.Show("Los campos estan vacíos", "Error Message", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Los campos están vacíos", "Error Message", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             else
             {
-
-                if (MessageBox.Show("Seguro que deseas modificar el Producto " + getId + "?", "Confirmation Message", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                if (MessageBox.Show("¿Seguro que deseas modificar el Producto " + getId + "?", "Confirmation Message", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
                 {
                     if (ConfirmarCon())
                     {
                         try
                         {
                             con.Open();
-
-                            string update = "Update Producto set Nombre=@nom,Descripcion=@des,Marca_Id=@marca," +
-                                "Tamaño=@tamaño,Material_Id=@mat,Stock=@stock,Costo=@costo,Proveedor_Id=@prov where Producto_Id= @id";
-
-
-                            using (SqlCommand updateD = new SqlCommand(update, con))
+                            string update = "UPDATE Producto SET Nombre=@nom, Descripcion=@des, Marca_Id=@marca, Tamaño=@tamaño, Material_Id=@mat, Stock=@stock, Costo=@costo, Proveedor_Id=@prov WHERE Producto_Id=@id";
+                            using (var updateD = new MySqlCommand(update, con))
                             {
                                 updateD.Parameters.AddWithValue("@nom", txtProductos_Nombre.Text.Trim());
                                 updateD.Parameters.AddWithValue("@des", txtProductos_Descripcion.Text.Trim());
@@ -218,26 +186,18 @@ namespace SistemaInventarioColchones.Persistencia
                                 LimpiarCampos();
                                 infoProductos();
                                 MessageBox.Show("El producto ha sido modificado exitosamente", "Information Message", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
                             }
                         }
-
-
-
                         catch (Exception ex)
                         {
-
-                            MessageBox.Show("No se ha logro modificar el producto" + ex, "Error Message", MessageBoxButtons.OK, MessageBoxIcon.Error);
-
+                            MessageBox.Show("No se logró modificar el producto: " + ex.Message, "Error Message", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         }
                         finally
                         {
-
                             con.Close();
                         }
                     }
                 }
-
             }
         }
 
@@ -248,15 +208,12 @@ namespace SistemaInventarioColchones.Persistencia
             {
                 DataGridViewRow row = dataGridView1.Rows[e.RowIndex];
 
-                // Verificar y obtener el valor de la primera celda (Usuario_id)
                 if (row.Cells[0].Value != null && int.TryParse(row.Cells[0].Value.ToString(), out getId))
                 {
-                    // El valor se pudo convertir a int correctamente
+                    // correcto
                 }
                 else
                 {
-                    // El valor de la primera celda no se pudo convertir a int
-                    // Manejar el error adecuadamente, por ejemplo, mostrando un mensaje de error
                     MessageBox.Show("El valor de la primera celda no es un número entero válido.");
                     return;
                 }
@@ -278,8 +235,6 @@ namespace SistemaInventarioColchones.Persistencia
                 txtProductos_Stock.Text = Stock;
                 txtProductos_Costo.Text = Costo;
                 txtProductos_Proveedor.Text = Proveedor;
-
-
             }
         }
 
@@ -288,61 +243,41 @@ namespace SistemaInventarioColchones.Persistencia
             if (txtProductos_Nombre.Text == "" || txtProductos_Descripcion.Text == "" || txtProductos_Marca.Text == "" || cmbProductos_Tamaño.SelectedIndex == -1 ||
                 txtProductos_Material.Text == "" || txtProductos_Stock.Text == "" || txtProductos_Costo.Text == "" || txtProductos_Proveedor.Text == "")
             {
-                MessageBox.Show("Los campos estan vacíos", "Error Message", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Los campos están vacíos", "Error Message", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             else
             {
-
-                if (MessageBox.Show("Seguro que deseas eliminar el Producto " + getId + "?", "Confirmation Message", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                if (MessageBox.Show("¿Seguro que deseas eliminar el Producto " + getId + "?", "Confirmation Message", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
                 {
                     if (ConfirmarCon())
                     {
                         try
                         {
                             con.Open();
-
-                            string delete = "Delete from Producto where Producto_Id= @id";
-
-
-                            using (SqlCommand deleteD = new SqlCommand(delete, con))
+                            string delete = "DELETE FROM Producto WHERE Producto_Id=@id";
+                            using (var deleteD = new MySqlCommand(delete, con))
                             {
-
-                                deleteD.Parameters.AddWithValue("id", getId);
+                                deleteD.Parameters.AddWithValue("@id", getId);
                                 deleteD.ExecuteNonQuery();
                                 LimpiarCampos();
                                 infoProductos();
                                 MessageBox.Show("El producto ha sido eliminado exitosamente", "Information Message", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
                             }
                         }
-
-
-
                         catch (Exception ex)
                         {
-
-                            MessageBox.Show("No se ha logrado eliminar el producto" + ex, "Error Message", MessageBoxButtons.OK, MessageBoxIcon.Error);
-
+                            MessageBox.Show("No se logró eliminar el producto: " + ex.Message, "Error Message", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         }
                         finally
                         {
-
                             con.Close();
                         }
                     }
                 }
-
             }
         }
 
-        private void txtProductos_Marca_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-
-        }
+        private void txtProductos_Marca_TextChanged(object sender, EventArgs e) { }
+        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e) { }
     }
 }

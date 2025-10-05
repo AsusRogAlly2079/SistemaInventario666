@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Data.SqlClient;
 using System.Windows.Forms;
 using SistemaInventarioColchones.Controlador;
+using MySql.Data.MySqlClient;
 
 namespace SistemaInventarioColchones.Persistencia
 {
@@ -16,9 +16,7 @@ namespace SistemaInventarioColchones.Persistencia
             infoUsers();
         }
 
-
-        SqlConnection
-        con = new SqlConnection(@"Server=DESKTOP-TR972KR;Database=Bedware_;User Id=sa;Password=daniel1234;TrustServerCertificate=True");
+        MySqlConnection con = new MySqlConnection("Server=bed32989.mysql.database.azure.com;Database=sistema_comercial;Uid=parradosamuel35;Pwd=RTX2080TIxz$;SslMode=Required;");
 
         public void infoUsers()
         {
@@ -26,7 +24,6 @@ namespace SistemaInventarioColchones.Persistencia
             List<UsuariosInfo> listData = infoo.Usuarios();
 
             dataGridView1.DataSource = listData;
-
         }
 
         private void AdminUsuarios_Load(object sender, EventArgs e)
@@ -38,7 +35,7 @@ namespace SistemaInventarioColchones.Persistencia
         {
             if (txtUsuarios_Usuarios.Text == "" || txtContraseña_Usuarios.Text == "" || cmbUsuarios_Usuarios.SelectedIndex == -1)
             {
-                MessageBox.Show("Los campos estan vacíos", "Error Message", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Los campos están vacíos", "Error Message", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             else
             {
@@ -47,50 +44,46 @@ namespace SistemaInventarioColchones.Persistencia
                     try
                     {
                         con.Open();
-                        string query = "Select * from Usuario where Nombre = @nom";
-                        using (SqlCommand cmd = new SqlCommand(query, con))
+                        string query = "SELECT * FROM Usuario WHERE Nombre = @nom";
+                        using (var cmd = new MySqlCommand(query, con))
                         {
                             cmd.Parameters.AddWithValue("@nom", txtUsuarios_Usuarios.Text.Trim());
 
-                            SqlDataAdapter adapter = new SqlDataAdapter(cmd);
+                            MySqlDataAdapter adapter = new MySqlDataAdapter(cmd);
                             DataTable table = new DataTable();
                             adapter.Fill(table);
 
                             if (table.Rows.Count > 0)
                             {
-                                MessageBox.Show(txtUsuarios_Usuarios.Text + " ,el usuario ya esta creado", "Error Message", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                MessageBox.Show(txtUsuarios_Usuarios.Text + " ,el usuario ya está creado", "Error Message", MessageBoxButtons.OK, MessageBoxIcon.Error);
 
                             }
                             else
                             {
-                                string insertar = "Insert into Usuario (Nombre,Contrasena,Rol,Fecha_Creacion) values " +
+                                string insertar = "INSERT INTO Usuario (Nombre,Contraseña,Rol,Fecha_Creacion) VALUES " +
                                     "(@nom,@pas,@rol,@fecha)";
 
-                                using (SqlCommand insert = new SqlCommand(insertar, con))
+                                using (var insert = new MySqlCommand(insertar, con))
                                 {
                                     insert.Parameters.AddWithValue("@nom", txtUsuarios_Usuarios.Text.Trim());
                                     insert.Parameters.AddWithValue("@pas", txtContraseña_Usuarios.Text.Trim());
                                     insert.Parameters.AddWithValue("@rol", cmbUsuarios_Usuarios.SelectedItem.ToString());
-                                    insert.Parameters.AddWithValue("@fecha",DateTime.Now);
+                                    insert.Parameters.AddWithValue("@fecha", DateTime.Now);
+
                                     insert.ExecuteNonQuery();
                                     LimpiarCampos();
                                     infoUsers();
-                                    MessageBox.Show("Usuario registrado Exitosamente", "Information Message", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
+                                    MessageBox.Show("Usuario registrado exitosamente", "Information Message", MessageBoxButtons.OK, MessageBoxIcon.Information);
                                 }
                             }
-
                         }
                     }
                     catch (Exception ex)
                     {
-
-                        MessageBox.Show("Conexión Fállida", "Error Message"+ex, MessageBoxButtons.OK, MessageBoxIcon.Error);
-
+                        MessageBox.Show("Conexión Fallida: " + ex.Message, "Error Message", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
                     finally
                     {
-
                         con.Close();
                     }
                 }
@@ -99,19 +92,11 @@ namespace SistemaInventarioColchones.Persistencia
 
         public bool ConfirmarCon()
         {
-            if (con.State == ConnectionState.Closed)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            return con.State == ConnectionState.Closed;
         }
 
         public void LimpiarCampos()
         {
-
             txtUsuarios_Usuarios.Text = "";
             txtContraseña_Usuarios.Text = "";
             cmbUsuarios_Usuarios.SelectedIndex = -1;
@@ -121,61 +106,7 @@ namespace SistemaInventarioColchones.Persistencia
             LimpiarCampos();
         }
 
-        private void btnUsuario_Modificar_Click(object sender, EventArgs e)
-        {
-
-            if (txtUsuarios_Usuarios.Text == "" || txtContraseña_Usuarios.Text == "" || cmbUsuarios_Usuarios.SelectedIndex == -1)
-            {
-                MessageBox.Show("Los campos estan vacíos", "Error Message", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-            else
-            {
-
-                if (MessageBox.Show("Seguro que deseas modificar el Usuario" + getId + "?", "Confirmation Message", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
-                {
-                    if (ConfirmarCon())
-                    {
-                        try
-                        {
-                            con.Open();
-
-                            string update = "Update Usuario set Nombre=@nom,Contrasena=@pas,Rol=@rol where Usuario_id= @id";
-
-
-                            using (SqlCommand updateD = new SqlCommand(update, con))
-                            {
-                                updateD.Parameters.AddWithValue("@nom", txtUsuarios_Usuarios.Text.Trim());
-                                updateD.Parameters.AddWithValue("@pas", txtContraseña_Usuarios.Text.Trim());
-                                updateD.Parameters.AddWithValue("@rol", cmbUsuarios_Usuarios.SelectedItem);
-                                updateD.Parameters.AddWithValue("id", getId);
-                                updateD.ExecuteNonQuery();
-                                LimpiarCampos();
-                                infoUsers();
-                                MessageBox.Show("Usuario modificado exitosamente", "Information Message", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
-                            }
-                        }
-
-
-
-                        catch (Exception ex)
-                        {
-
-                            MessageBox.Show("Conexión Fállida"+ex, "Error Message", MessageBoxButtons.OK, MessageBoxIcon.Error);
-
-                        }
-                        finally
-                        {
-
-                            con.Close();
-                        }
-                    }
-                }
-
-            }
-        }
-
-           private int getId = 0;
+        private int getId = 0;
         private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             if (e.RowIndex != -1)
@@ -189,8 +120,6 @@ namespace SistemaInventarioColchones.Persistencia
                 }
                 else
                 {
-                    // El valor de la primera celda no se pudo convertir a int
-                    // Manejar el error adecuadamente, por ejemplo, mostrando un mensaje de error
                     MessageBox.Show("El valor de la primera celda no es un número entero válido.");
                     return;
                 }
@@ -205,65 +134,88 @@ namespace SistemaInventarioColchones.Persistencia
             }
         }
 
-        private void btnUsuario_Eliminar_Click(object sender, EventArgs e)
+        private void btnUsuario_Modificar_Click(object sender, EventArgs e)
         {
             if (txtUsuarios_Usuarios.Text == "" || txtContraseña_Usuarios.Text == "" || cmbUsuarios_Usuarios.SelectedIndex == -1)
             {
-                MessageBox.Show("Los campos estan vacíos", "Error Message", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Los campos están vacíos", "Error Message", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             else
             {
-
-                if (MessageBox.Show("Seguro que deseas eliminar el Usuario" + getId + "?", "Confirmation Message", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                if (MessageBox.Show("Seguro que deseas modificar el Usuario " + getId + "?", "Confirmation Message", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
                 {
                     if (ConfirmarCon())
                     {
                         try
                         {
                             con.Open();
+                            string update = "UPDATE Usuario SET Nombre=@nom,Contraseña=@pas,Rol=@rol WHERE Usuario_id=@id";
 
-                            string delete = "Delete from Usuario where Usuario_id= @id";
-
-
-                            using (SqlCommand deleteD = new SqlCommand(delete, con))
+                            using (var updateD = new MySqlCommand(update, con))
                             {
-                                
-                                deleteD.Parameters.AddWithValue("id", getId);
-                                deleteD.ExecuteNonQuery();
+                                updateD.Parameters.AddWithValue("@nom", txtUsuarios_Usuarios.Text.Trim());
+                                updateD.Parameters.AddWithValue("@pas", txtContraseña_Usuarios.Text.Trim());
+                                updateD.Parameters.AddWithValue("@rol", cmbUsuarios_Usuarios.SelectedItem.ToString());
+                                updateD.Parameters.AddWithValue("@id", getId);
+                                updateD.ExecuteNonQuery();
                                 LimpiarCampos();
                                 infoUsers();
-                                MessageBox.Show("Usuario eliminado exitosamente", "Information Message", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
+                                MessageBox.Show("Usuario modificado exitosamente", "Information Message", MessageBoxButtons.OK, MessageBoxIcon.Information);
                             }
                         }
-
-
-
                         catch (Exception ex)
                         {
-
-                            MessageBox.Show("Conexión Fállida" + ex, "Error Message", MessageBoxButtons.OK, MessageBoxIcon.Error);
-
+                            MessageBox.Show("Conexión Fallida: " + ex.Message, "Error Message", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         }
                         finally
                         {
-
                             con.Close();
                         }
                     }
                 }
-
             }
         }
 
-        private void panel1_Paint(object sender, PaintEventArgs e)
+        private void btnUsuario_Eliminar_Click(object sender, EventArgs e)
         {
+            if (txtUsuarios_Usuarios.Text == "" || txtContraseña_Usuarios.Text == "" || cmbUsuarios_Usuarios.SelectedIndex == -1)
+            {
+                MessageBox.Show("Los campos están vacíos", "Error Message", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            else
+            {
+                if (MessageBox.Show("Seguro que deseas eliminar el Usuario " + getId + "?", "Confirmation Message", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                {
+                    if (ConfirmarCon())
+                    {
+                        try
+                        {
+                            con.Open();
+                            string delete = "DELETE FROM Usuario WHERE Usuario_id=@id";
 
+                            using (var deleteD = new MySqlCommand(delete, con))
+                            {
+                                deleteD.Parameters.AddWithValue("@id", getId);
+                                deleteD.ExecuteNonQuery();
+                                LimpiarCampos();
+                                infoUsers();
+                                MessageBox.Show("Usuario eliminado exitosamente", "Information Message", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show("Conexión Fallida: " + ex.Message, "Error Message", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        }
+                        finally
+                        {
+                            con.Close();
+                        }
+                    }
+                }
+            }
         }
 
-        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-
-        }
+        private void panel1_Paint(object sender, PaintEventArgs e) { }
+        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e) { }
     }
 }

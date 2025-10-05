@@ -4,12 +4,12 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using MySql.Data.MySqlClient;
 namespace SistemaInventarioColchones.Controlador
 {
     class ProductosInfo
     {
-        public string id {  get; set; }
+        public string id { get; set; }
         public string Nombre { get; set; }
         public string Descripcion { get; set; }
         public string Marca { get; set; }
@@ -22,40 +22,36 @@ namespace SistemaInventarioColchones.Controlador
         public List<ProductosInfo> Productos()
         {
             List<ProductosInfo> listData = new List<ProductosInfo>();
-            using (SqlConnection con = new SqlConnection(@"Server=DESKTOP-TR972KR;Database=Bedware_;User Id=sa;Password=daniel1234;TrustServerCertificate=True"))
+            string connString = "Server=bed32989.mysql.database.azure.com;Database=sistema_comercial;Uid=parradosamuel35;Pwd=RTX2080TIxz$;SslMode=Required;";
+
+            using (var con = new MySqlConnection(connString))
             {
-
                 con.Open();
-                string selectData = "select * from Producto";
+                string selectData = "SELECT * FROM Producto";
 
-                using (SqlCommand cmd = new SqlCommand(selectData, con))
+                using (var cmd = new MySqlCommand(selectData, con))
                 {
-                    SqlDataReader reader = cmd.ExecuteReader();
-                    while (reader.Read())
+                    using (var reader = cmd.ExecuteReader())
                     {
-                        ProductosInfo info = new ProductosInfo();
-                        info.id = reader["Producto_Id"].ToString();
-                        info.Nombre = reader["Nombre"].ToString();
-                        info.Descripcion = reader["Descripcion"].ToString();
-                        info.Marca = reader["Marca_Id"].ToString();
-                        info.Tamaño = reader["Tamaño"].ToString();
-                        info.Material = reader["Material_Id"].ToString();
-                        info.Stock = reader["Stock"].ToString();
-                        info.Costo = reader["Costo"].ToString();
-                        info.Proveedor = reader["Proveedor_Id"].ToString();
+                        while (reader.Read())
+                        {
+                            ProductosInfo info = new ProductosInfo();
+                            info.id = reader["Producto_Id"].ToString();
+                            info.Nombre = reader["Nombre"].ToString();
+                            info.Descripcion = reader["Descripcion"].ToString();
+                            info.Marca = reader["Marca_Id"].ToString();
+                            info.Tamaño = reader["Tamaño"].ToString();
+                            info.Material = reader["Material_Id"].ToString();
+                            info.Stock = reader["Stock"].ToString();
+                            info.Costo = reader["Costo"].ToString();
+                            info.Proveedor = reader["Proveedor_Id"].ToString();
 
-
-                        listData.Add(info);
-
+                            listData.Add(info);
+                        }
                     }
                 }
             }
             return listData;
-
         }
-
-
-
-      
     }
 }

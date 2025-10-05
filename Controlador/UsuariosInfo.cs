@@ -4,12 +4,12 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using MySql.Data.MySqlClient;
 
 namespace SistemaInventarioColchones.Controlador
 {
     class UsuariosInfo
     {
-
         public string Id { get; set; }
         public string Nombre { get; set; }
         public string Contraseña { get; set; }
@@ -18,31 +18,31 @@ namespace SistemaInventarioColchones.Controlador
 
         public List<UsuariosInfo> Usuarios()
         {
-
             List<UsuariosInfo> listData = new List<UsuariosInfo>();
+            string connString = "Server=bed32989.mysql.database.azure.com;Database=sistema_comercial;Uid=parradosamuel35;Pwd=RTX2080TIxz$;SslMode=Required;";
 
-            using (SqlConnection con = new SqlConnection(@"Server=DESKTOP-TR972KR;Database=Bedware_;User Id=sa;Password=daniel1234;TrustServerCertificate=True"))
+            using (var con = new MySqlConnection(connString))
             {
-
                 con.Open();
-                string selectData = "select * from Usuario";
+                string selectData = "SELECT * FROM Usuario";
 
-                using (SqlCommand cmd = new SqlCommand(selectData, con))
+                using (var cmd = new MySqlCommand(selectData, con))
                 {
-                    SqlDataReader reader = cmd.ExecuteReader();
-                    while (reader.Read()) 
-                    { 
-                    UsuariosInfo info = new UsuariosInfo();
-                       info.Id = reader["Usuario_id"].ToString();
-                       info.Nombre= reader["Nombre"].ToString();
-                       info.Contraseña= reader["Contrasena"].ToString();
-                        info.Rol = reader["Rol"].ToString();
-                        info.Fecha = reader["Fecha_Creacion"].ToString();
+                    using (var reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            UsuariosInfo info = new UsuariosInfo();
+                            info.Id = reader["Usuario_Id"].ToString();
+                            info.Nombre = reader["Nombre"].ToString();
+                            info.Contraseña = reader["Contraseña"].ToString();
+                            info.Rol = reader["Rol"].ToString();
+                            info.Fecha = reader["Fecha_Creacion"].ToString();
 
-                        listData.Add(info);
-
+                            listData.Add(info);
+                        }
                     }
-                }   
+                }
             }
             return listData;
         }

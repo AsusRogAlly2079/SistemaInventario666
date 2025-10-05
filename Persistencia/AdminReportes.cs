@@ -8,11 +8,11 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using SistemaInventarioColchones.Controlador;
-using System.Data.SqlClient;
+using MySql.Data.MySqlClient;
 
 namespace SistemaInventarioColchones.Persistencia
 {
-    public partial class UserControl1: UserControl
+    public partial class UserControl1 : UserControl
     {
         public UserControl1()
         {
@@ -20,20 +20,13 @@ namespace SistemaInventarioColchones.Persistencia
             infoClientes();
         }
 
-        SqlConnection
-       con = new SqlConnection(@"Server=DESKTOP-TR972KR;Database=Bedware_;User Id=sa;Password=daniel1234;TrustServerCertificate=True");
+        MySqlConnection con = new MySqlConnection("Server=bed32989.mysql.database.azure.com;Database=sistema_comercial;Uid=parradosamuel35;Pwd=RTX2080TIxz$;SslMode=Required;");
 
         public bool ConfirmarCon()
         {
-            if (con.State == ConnectionState.Closed)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            return con.State == ConnectionState.Closed;
         }
+
         private void UserControl1_Load(object sender, EventArgs e)
         {
 
@@ -47,9 +40,9 @@ namespace SistemaInventarioColchones.Persistencia
                 {
                     con.Open();
                     string query = "SELECT COUNT(*) FROM Usuario";
-                    using (SqlCommand cmd = new SqlCommand(query, con))
+                    using (var cmd = new MySqlCommand(query, con))
                     {
-                        int total = (int)cmd.ExecuteScalar();
+                        int total = Convert.ToInt32(cmd.ExecuteScalar());
                         MessageBox.Show("Total de Usuarios: " + total, "Información", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
                 }
@@ -63,16 +56,14 @@ namespace SistemaInventarioColchones.Persistencia
                 }
             }
         }
+
         public void infoClientes()
         {
             ClientesInfo infoo = new ClientesInfo();
             List<ClientesInfo> listData = infoo.Clientes();
 
             dataGridView1.DataSource = listData;
-
         }
-
-    
 
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
@@ -87,9 +78,9 @@ namespace SistemaInventarioColchones.Persistencia
                 {
                     con.Open();
                     string query = "SELECT COUNT(*) FROM Cliente";
-                    using (SqlCommand cmd = new SqlCommand(query, con))
+                    using (var cmd = new MySqlCommand(query, con))
                     {
-                        int total = (int)cmd.ExecuteScalar();
+                        int total = Convert.ToInt32(cmd.ExecuteScalar());
                         MessageBox.Show("Total de clientes: " + total, "Información", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
                 }
