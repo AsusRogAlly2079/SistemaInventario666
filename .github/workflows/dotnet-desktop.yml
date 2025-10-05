@@ -10,8 +10,8 @@ jobs:
   build:
     runs-on: windows-2022
     env:
-      Solution_Name: SistemaInventarioColchones.sln          # Cambia "MyApp.sln" por el nombre de tu solución.
-      Project_Path: SistemaInventarioColchones.csproj        # Cambia la ruta según tu proyecto.
+      Solution_Name: SistemaInventarioColchones.sln
+      Project_Path: SistemaInventarioColchones.csproj
     steps:
     - name: Checkout code
       uses: actions/checkout@v4
@@ -23,6 +23,9 @@ jobs:
 
     - name: Restore NuGet packages
       run: dotnet restore $env:Solution_Name
+
+    - name: Nuget restore (legacy)
+      run: nuget restore $env:Solution_Name
 
     - name: Build .NET project
       run: dotnet build $env:Project_Path --configuration Release
