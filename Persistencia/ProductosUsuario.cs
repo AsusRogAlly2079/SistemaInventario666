@@ -12,9 +12,18 @@ namespace SistemaInventarioColchones.Persistencia
 {
     public partial class ProductosUsuario: Form
     {
-        public ProductosUsuario()
+        private string rolUsuario;
+        public ProductosUsuario(string rol)
         {
             InitializeComponent();
+            rolUsuario = rol;
+
+            // Bloquea el botón de usuarios aquí:
+            if (rolUsuario != "administrador")
+            {
+                btnUsuarios.Enabled = false;
+                btnUsuarios.Text = "Bloqueado";
+            }
         }
 
         private void ProductosUsuario_Load(object sender, EventArgs e)
@@ -46,7 +55,7 @@ namespace SistemaInventarioColchones.Persistencia
 
         private void btnReportes_Click(object sender, EventArgs e)
         {
-            InicioUsuario frm = new InicioUsuario();
+            InicioUsuario frm = new InicioUsuario("vendedor");
             frm.Show();
             this.Hide();
         }
@@ -61,14 +70,14 @@ namespace SistemaInventarioColchones.Persistencia
 
         private void btnProductos_Click(object sender, EventArgs e)
         {
-            ProductosUsuario frm = new ProductosUsuario();
+            ProductosUsuario frm = new ProductosUsuario("vendedor");
             frm.Show();
             this.Hide();
         }
 
         private void btnProveedores_Click(object sender, EventArgs e)
         {
-            ProveedoresUsuario frm =new ProveedoresUsuario();   
+            ProveedoresUsuario frm =new ProveedoresUsuario("vendedor");   
             frm.Show();
             this.Hide();
         }
@@ -79,6 +88,11 @@ namespace SistemaInventarioColchones.Persistencia
         }
 
         private void usuarioMovimiento1_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label1_Click(object sender, EventArgs e)
         {
 
         }

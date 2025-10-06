@@ -56,9 +56,10 @@
             this.panel2.Controls.Add(this.label1);
             this.panel2.Controls.Add(this.pictureBox1);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Left;
-            this.panel2.Location = new System.Drawing.Point(0, 45);
+            this.panel2.Location = new System.Drawing.Point(0, 69);
+            this.panel2.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(228, 743);
+            this.panel2.Size = new System.Drawing.Size(342, 1143);
             this.panel2.TabIndex = 7;
             // 
             // btnLogout
@@ -70,9 +71,10 @@
             this.btnLogout.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnLogout.Font = new System.Drawing.Font("Tahoma", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnLogout.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.btnLogout.Location = new System.Drawing.Point(12, 659);
+            this.btnLogout.Location = new System.Drawing.Point(18, 1014);
+            this.btnLogout.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.btnLogout.Name = "btnLogout";
-            this.btnLogout.Size = new System.Drawing.Size(201, 33);
+            this.btnLogout.Size = new System.Drawing.Size(302, 51);
             this.btnLogout.TabIndex = 14;
             this.btnLogout.Text = "Cerrar Sesión";
             this.btnLogout.UseVisualStyleBackColor = false;
@@ -86,9 +88,10 @@
             this.btnProveedores.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnProveedores.Font = new System.Drawing.Font("Tahoma", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnProveedores.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.btnProveedores.Location = new System.Drawing.Point(16, 359);
+            this.btnProveedores.Location = new System.Drawing.Point(24, 552);
+            this.btnProveedores.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.btnProveedores.Name = "btnProveedores";
-            this.btnProveedores.Size = new System.Drawing.Size(201, 33);
+            this.btnProveedores.Size = new System.Drawing.Size(302, 51);
             this.btnProveedores.TabIndex = 13;
             this.btnProveedores.Text = "Proveedores";
             this.btnProveedores.UseVisualStyleBackColor = true;
@@ -102,9 +105,10 @@
             this.btnProductos.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnProductos.Font = new System.Drawing.Font("Tahoma", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnProductos.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.btnProductos.Location = new System.Drawing.Point(12, 301);
+            this.btnProductos.Location = new System.Drawing.Point(18, 463);
+            this.btnProductos.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.btnProductos.Name = "btnProductos";
-            this.btnProductos.Size = new System.Drawing.Size(201, 33);
+            this.btnProductos.Size = new System.Drawing.Size(302, 51);
             this.btnProductos.TabIndex = 12;
             this.btnProductos.Text = "Productos";
             this.btnProductos.UseVisualStyleBackColor = true;
@@ -118,9 +122,10 @@
             this.btnUsuarios.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnUsuarios.Font = new System.Drawing.Font("Tahoma", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnUsuarios.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.btnUsuarios.Location = new System.Drawing.Point(12, 250);
+            this.btnUsuarios.Location = new System.Drawing.Point(18, 385);
+            this.btnUsuarios.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.btnUsuarios.Name = "btnUsuarios";
-            this.btnUsuarios.Size = new System.Drawing.Size(201, 33);
+            this.btnUsuarios.Size = new System.Drawing.Size(302, 51);
             this.btnUsuarios.TabIndex = 11;
             this.btnUsuarios.Text = "Usuarios";
             this.btnUsuarios.UseVisualStyleBackColor = true;
@@ -134,9 +139,10 @@
             this.btnReportes.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnReportes.Font = new System.Drawing.Font("Tahoma", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnReportes.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.btnReportes.Location = new System.Drawing.Point(12, 195);
+            this.btnReportes.Location = new System.Drawing.Point(18, 300);
+            this.btnReportes.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.btnReportes.Name = "btnReportes";
-            this.btnReportes.Size = new System.Drawing.Size(201, 33);
+            this.btnReportes.Size = new System.Drawing.Size(302, 51);
             this.btnReportes.TabIndex = 10;
             this.btnReportes.Text = "Reportes";
             this.btnReportes.UseVisualStyleBackColor = true;
@@ -147,18 +153,21 @@
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label1.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.label1.Location = new System.Drawing.Point(30, 128);
+            this.label1.Location = new System.Drawing.Point(45, 197);
+            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(168, 16);
+            this.label1.Size = new System.Drawing.Size(205, 24);
             this.label1.TabIndex = 9;
-            this.label1.Text = "Bienvenido, Administrador...";
+            this.label1.Text = "Bienvenido, Vendedor";
+            this.label1.Click += new System.EventHandler(this.label1_Click);
             // 
             // pictureBox1
             // 
             this.pictureBox1.Image = global::SistemaInventarioColchones.Properties.Resources.imagenlogin;
-            this.pictureBox1.Location = new System.Drawing.Point(67, 24);
+            this.pictureBox1.Location = new System.Drawing.Point(100, 37);
+            this.pictureBox1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(96, 80);
+            this.pictureBox1.Size = new System.Drawing.Size(144, 123);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pictureBox1.TabIndex = 8;
             this.pictureBox1.TabStop = false;
@@ -170,17 +179,19 @@
             this.panel1.Controls.Add(this.btnOff);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel1.Location = new System.Drawing.Point(0, 0);
+            this.panel1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(1334, 45);
+            this.panel1.Size = new System.Drawing.Size(2001, 69);
             this.panel1.TabIndex = 6;
             // 
             // label3
             // 
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Tahoma", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(12, 12);
+            this.label3.Location = new System.Drawing.Point(18, 18);
+            this.label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(659, 23);
+            this.label3.Size = new System.Drawing.Size(1008, 35);
             this.label3.TabIndex = 3;
             this.label3.Text = "Sistema de Inventario de Colchones BedWare | Portal del Vendedor";
             // 
@@ -189,9 +200,10 @@
             this.btnOff.BackColor = System.Drawing.Color.Maroon;
             this.btnOff.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnOff.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.btnOff.Location = new System.Drawing.Point(1286, 12);
+            this.btnOff.Location = new System.Drawing.Point(1929, 18);
+            this.btnOff.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.btnOff.Name = "btnOff";
-            this.btnOff.Size = new System.Drawing.Size(36, 22);
+            this.btnOff.Size = new System.Drawing.Size(54, 34);
             this.btnOff.TabIndex = 2;
             this.btnOff.Text = "X";
             this.btnOff.UseVisualStyleBackColor = false;
@@ -199,20 +211,22 @@
             // 
             // adminProveedor1
             // 
-            this.adminProveedor1.Location = new System.Drawing.Point(228, 45);
+            this.adminProveedor1.Location = new System.Drawing.Point(342, 69);
+            this.adminProveedor1.Margin = new System.Windows.Forms.Padding(6, 8, 6, 8);
             this.adminProveedor1.Name = "adminProveedor1";
-            this.adminProveedor1.Size = new System.Drawing.Size(1106, 687);
+            this.adminProveedor1.Size = new System.Drawing.Size(1659, 1057);
             this.adminProveedor1.TabIndex = 8;
             // 
             // ProveedoresUsuario
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1334, 788);
+            this.ClientSize = new System.Drawing.Size(2001, 1212);
             this.Controls.Add(this.adminProveedor1);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.panel1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.MinimizeBox = false;
             this.Name = "ProveedoresUsuario";
             this.Text = "ProveedoresUsuario";

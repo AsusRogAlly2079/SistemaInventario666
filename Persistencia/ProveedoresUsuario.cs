@@ -13,9 +13,18 @@ namespace SistemaInventarioColchones.Persistencia
 {
     public partial class ProveedoresUsuario: Form
     {
-        public ProveedoresUsuario()
+        private string rolUsuario;
+        public ProveedoresUsuario(string rol)
         {
             InitializeComponent();
+            rolUsuario = rol;
+
+            // Bloquea el botón de usuarios aquí:
+            if (rolUsuario != "administrador")
+            {
+                btnUsuarios.Enabled = false;
+                btnUsuarios.Text = "Bloqueado";
+            }
         }
 
         private void btnLogout_Click(object sender, EventArgs e)
@@ -50,23 +59,28 @@ namespace SistemaInventarioColchones.Persistencia
 
         private void btnProductos_Click(object sender, EventArgs e)
         {
-            ProductosUsuario frm = new ProductosUsuario();
+            ProductosUsuario frm = new ProductosUsuario("vendedor");
             frm.Show();
             this.Hide();
         }
 
         private void btnProveedores_Click(object sender, EventArgs e)
         {
-            ProveedoresUsuario frm = new ProveedoresUsuario();
+            ProveedoresUsuario frm = new ProveedoresUsuario("vendedor");
             frm .Show();
             this.Hide ();
         }
 
         private void btnReportes_Click(object sender, EventArgs e)
         {
-            InicioUsuario frm = new InicioUsuario();
+            InicioUsuario frm = new InicioUsuario("vendedor");
             frm.Show();
             this.Hide();
+        }
+
+        private void label1_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

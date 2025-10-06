@@ -57,12 +57,12 @@ namespace SistemaInventarioColchones
                 {
                     con.Open();
 
+
                     string select = "SELECT * FROM Usuario WHERE Nombre = @nom AND Contraseña = @pas";
                     using (var cmd = new MySqlCommand(select, con))
                     {
                         cmd.Parameters.AddWithValue("@nom", txtUsername.Text.Trim());
                         cmd.Parameters.AddWithValue("@pas", txtContraseña.Text.Trim());
-                        Usuarioventa = txtUsername.Text;
 
                         MySqlDataAdapter adapter = new MySqlDataAdapter(cmd);
                         DataTable tabla = new DataTable();
@@ -70,19 +70,19 @@ namespace SistemaInventarioColchones
 
                         if (tabla.Rows.Count > 0)
                         {
-                            string rol = tabla.Rows[0]["Rol"].ToString(); // Obtenemos el rol del usuario
+                            string rol = tabla.Rows[0]["Rol"].ToString(); // Traer el rol del usuario
 
                             MessageBox.Show("Se inició sesión correctamente", "Información", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                             if (rol == "administrador")
                             {
-                                Inicio frm = new Inicio(); // Formulario para admin
+                                Inicio frm = new Inicio();
                                 frm.Show();
                                 this.Hide();
                             }
                             else if (rol == "vendedor")
                             {
-                                InicioUsuario frm = new InicioUsuario(); // Formulario para vendedor
+                                InicioUsuario frm = new InicioUsuario(rol); // Pasa el rol
                                 frm.Show();
                                 this.Hide();
                             }
